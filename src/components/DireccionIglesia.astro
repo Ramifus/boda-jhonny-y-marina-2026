@@ -1,0 +1,184 @@
+---
+// DireccionSalon.astro (o el nombre que uses)
+---
+<section class="pt-16 md:pt-24 pb-2 px-4 relative">
+  <div class="max-w-xl mx-auto text-center relative">
+    
+    <!-- TÍTULO DIRECCIÓN -->
+    <div class="mb-4" id="titulo-salon">
+      <h2
+        class="font-charm text-3xl md:text-4xl text-[#c29a62] font-bold tracking-wide"
+      >
+        Ceremonia Religiosa
+      </h2>
+    </div>
+
+    <!-- 🏛️ ICONO DIRECCIÓN CON FLORES EN LOS BORDES -->
+    <div class="relative mb-4" id="icono-salon">
+
+      <!-- 🌸 FLORES EN EL BORDE IZQUIERDO (PEGADA AL BORDE DEL CONTENEDOR) -->
+      <div class="absolute left-0 top-1/2 -translate-y-1/2 w-12 pointer-events-none -ml-6 sm:-ml-7 md:-ml-8" id="flores-igl-izq">
+        <img
+          src="/imagenes/laterales.webp"
+          alt="Flores decorativas izquierda"
+          class="w-full h-auto object-contain"
+        />
+      </div>
+
+      <!-- ICONO CENTRAL -->
+      <div class="flex justify-center">
+        <div
+          role="img"
+          aria-label="Iglesia"
+          class="w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 icono-iglesia"
+        ></div>
+      </div>
+
+      <!-- 🌸 FLORES EN EL BORDE DERECHO (PEGADA AL BORDE DEL CONTENEDOR) -->
+      <div class="absolute right-0 top-1/2 -translate-y-1/2 w-12 pointer-events-none -mr-6 sm:-mr-7 md:-mr-8" id="flores-igl-der">
+        <img
+          src="/imagenes/laterales.webp"
+          alt="Flores decorativas derecha"
+          class="w-full h-auto object-contain scale-x-[-1]"
+        />
+      </div>
+
+    </div>
+
+    <!-- INFORMACIÓN DE UBICACIÓN -->
+    <div class="mb-2" id="info-salon">
+      <p
+        class="font-charm text-2xl md:text-xl text-[#34506b] leading-loose mb-2"
+      >
+        <b class="text-[#5b84a8]">Iglesia Evangélica Mundial<br />Jesucristo Vive</b><br />
+        Comunidad La Enconada – Cotoca<br />
+        <span class="text-[#5b84a8] font-bold">14:00 Hrs.</span>
+      </p>
+    </div>
+    
+    <!-- BOTÓN VER UBICACIÓN -->
+    <div class="flex justify-center" id="boton-salon">
+      
+      <a
+        href="https://maps.app.goo.gl/nqmEVcRN7PteoEXr9"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-3 rounded-full bg-[#34506b] border border-[#5b84a8]/60 shadow-md px-8 py-3 md:px-10 md:py-3.5 cursor-pointer transition-transform duration-300 hover:scale-105"
+      >
+        <!-- 📍 Icono de dirección -->
+        <svg
+          class="w-5 h-5 md:w-6 md:h-6 text-[#cfe0ee] flex-shrink-0"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M12 2c-3.87 0-7 3.13-7 7 0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+        </svg>
+
+        <span class="font-charm text-xl md:text-2xl tracking-wide text-[#f3f7fb] whitespace-nowrap">
+          Ver ubicación
+        </span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  
+  gsap.registerPlugin(ScrollTrigger);
+
+  if (typeof window !== "undefined") {
+    document.addEventListener("DOMContentLoaded", () => {
+      // Estado inicial
+      gsap.set("#icono-salon", { opacity: 0, scale: 0.94 });
+      gsap.set("#titulo-salon", { opacity: 0, scale: 0.96 });
+      gsap.set("#info-salon", { opacity: 0, scale: 0.96 });
+      gsap.set("#boton-salon", { opacity: 0, scale: 0.96 });
+      gsap.set("#flores-igl-izq", { opacity: 0, x: 40 });
+      gsap.set("#flores-igl-der", { opacity: 0, x: -40 });
+
+      // ✨ ANIMACIÓN SIMULTÁNEA - TODO AL MISMO TIEMPO
+      ScrollTrigger.create({
+        trigger: "#icono-salon",
+        start: "top 85%",
+        end: "top 20%",
+        onEnter: () => {
+          const tl = gsap.timeline();
+          
+          // TODO aparece al mismo tiempo
+          tl.to("#icono-salon, #flores-igl-izq, #flores-igl-der, #titulo-salon, #info-salon, #boton-salon", {
+            opacity: 1,
+            duration: 1.4,
+            ease: "power2.out",
+            stagger: 0.12,
+          })
+          // Animaciones individuales (simultáneas)
+          .to("#icono-salon", {
+            scale: 1,
+            duration: 1.4,
+            ease: "power2.out",
+          }, "<0.12")
+          .to("#flores-igl-izq", {
+            x: 0,
+            duration: 1.4,
+            ease: "power2.out",
+          }, "<0.12")
+          .to("#flores-igl-der", {
+            x: 0,
+            duration: 1.4,
+            ease: "power2.out",
+          }, "<0.12")
+          .to("#titulo-salon, #info-salon, #boton-salon", {
+            scale: 1,
+            duration: 1.4,
+            ease: "power2.out",
+          }, "<0.12");
+        },
+        onLeaveBack: () => {
+          // Salida simultánea
+          const tl = gsap.timeline();
+          
+          tl.to("#icono-salon, #flores-igl-izq, #flores-igl-der, #titulo-salon, #info-salon, #boton-salon", {
+            opacity: 0,
+            duration: 0.7,
+            ease: "power2.in",
+          })
+          .to("#icono-salon", {
+            scale: 0.94,
+            duration: 0.7,
+            ease: "power2.in",
+          }, "<0.12")
+          .to("#flores-igl-izq", {
+            x: 40,
+            duration: 0.7,
+            ease: "power2.in",
+          }, "<0.12")
+          .to("#flores-igl-der", {
+            x: -40,
+            duration: 0.7,
+            ease: "power2.in",
+          }, "<0.12")
+          .to("#titulo-salon, #info-salon, #boton-salon", {
+            scale: 0.96,
+            duration: 0.7,
+            ease: "power2.in",
+          }, "<0.12");
+        },
+      });
+
+      console.log("🎉 Sección de Salón inicializada");
+    });
+  }
+</script>
+
+<style>
+  /* Icono de iglesia pintado en dorado (misma técnica que en Dirección) */
+  .icono-iglesia {
+    background-color: #5b84a8;
+    -webkit-mask: url("/imagenes/iglesia.png") center / contain no-repeat;
+    mask: url("/imagenes/iglesia.png") center / contain no-repeat;
+  }
+</style>
