@@ -17,6 +17,19 @@ const { title } = Astro.props;
     <link rel="icon" type="image/png" href="/iconos/Anillos.png" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+
+    <!-- 📲 Vista previa al compartir el link (WhatsApp, Facebook, etc.)
+         Sin descripción a propósito: el cliente quiere solo la imagen y el link.
+         La URL de la imagen tiene que ser completa, por eso sale de `site`. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:title" content={title} />
+    <meta property="og:image" content={new URL('/miniatura-whatsapp.jpg', Astro.site)} />
+    <meta property="og:image:secure_url" content={new URL('/miniatura-whatsapp.jpg', Astro.site)} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
      <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
